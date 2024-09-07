@@ -3,8 +3,9 @@ import Link from "../components/Link"
 import Logo from "../components/Logo"
 import Rodape from "../components/Rodape"
 import Titulo from "../components/Titulo"
-import InputSenha from "../components/inputSenha"
-import InputUsuario from "../components/inputUsusario"
+import InputSenha from "../components/InputSenha"
+import InputUsuario from "../components/InputUsusario"
+import Conteudo from "../components/Conteudo"
 import "./login.css";
 
 function Login() {
@@ -12,7 +13,7 @@ function Login() {
     const textoLogo = "Logo da Aplicação"
     return (
         <>
-            <main className="login-form">
+            <Conteudo estilo="login-form">
                 <Logo imagem={urlImagem} texto={textoLogo} />
                 <Titulo texto="Aluno Online"/>
                 <InputUsuario />
@@ -20,7 +21,7 @@ function Login() {
                 <BotaoSubmit texto="Entrar"/>
                 <Link texto="Esqueceu a Senha" linky="#"/>
                 <Link texto="Criar uma Conta" linky="#"/>
-            </main>
+            </Conteudo>
             <Rodape />
         </>
     )

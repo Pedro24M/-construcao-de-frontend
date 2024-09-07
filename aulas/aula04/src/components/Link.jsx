@@ -1,6 +1,6 @@
 function Link(props) {
     return(
-        <a href={props.linky}>{props.texto}</a>
+        <a href="#">{props.texto}</a>
     );
 };
 
