@@ -11,6 +11,7 @@ function App() {
   return (
     <>
       {rota == '/login' && <Login navegaPara={mudaRota} />}
+      
       {rota == '/home' && <Home navegaPara={mudaRota} />}
       {rota == '/perfil' && <Perfil navegaPara={mudaRota} />}
     </>
