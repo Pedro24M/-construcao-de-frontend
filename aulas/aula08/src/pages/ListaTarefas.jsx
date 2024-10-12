@@ -12,7 +12,7 @@ function ListaTarefas() {
     <ul>
       {tarefas.map((item, index) => (
         <li key={index}>
-          {item.nome_tarefas} <button onClick={() => remover(item)}>Remover</button>
+          {item.tarefa} <button onClick={() => remover(item)}>Remover</button>
         </li>
       ))}
     </ul>

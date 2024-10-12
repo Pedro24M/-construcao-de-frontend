@@ -13,14 +13,24 @@ function TarefaProvider(props) {
   };
 
   const incluir = (tarefa) => {
-    setTarefas([...tarefas, tarefa]);
+    fetch("http://localhost:3000/tarefas", {
+      method: "POST",
+      body: JSON.stringify({tarefa}),
+    })
+      .then((response) => setTarefas([...tarefas, tarefa]))
+      .catch((error) => console.log("deu ruim!", error.message));
   };
 
   const remover = (tarefa) => {
-    setTarefas(tarefas.filter((item) => item != tarefa));
+    fatch(`http://localhost:3000/tarefas/${tarefa.id}`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((response) => setTarefas(tarefas.filter((item) => item != tarefa)))
+      .catch((error) => console.log("Deu ruim!", error.message));
   };
 
-  const contexto = { tarefas, incluir, remover, carregar};
+  const contexto = { tarefas, incluir, remover, carregar };
 
   return (
     <TarefaContext.Provider value={contexto}>
