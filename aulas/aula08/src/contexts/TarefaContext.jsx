@@ -3,7 +3,14 @@ import { useState, createContext } from "react";
 const TarefaContext = createContext();
 
 function TarefaProvider(props) {
-  const [tarefas, setTarefas] = useState(["Estudar React", "Fazer a praticas"]);
+  const [tarefas, setTarefas] = useState([]);
+
+  const carregar = () => {
+    fetch("http://localhost:3000/tarefas")
+      .then((response) => response.json())
+      .then((data) => setTarefas(data))
+      .catch((error) => console.log("deu ruim!", error.message));
+  };
 
   const incluir = (tarefa) => {
     setTarefas([...tarefas, tarefa]);
@@ -13,7 +20,7 @@ function TarefaProvider(props) {
     setTarefas(tarefas.filter((item) => item != tarefa));
   };
 
-  const contexto = {tarefas, incluir, remover}
+  const contexto = { tarefas, incluir, remover, carregar};
 
   return (
     <TarefaContext.Provider value={contexto}>
