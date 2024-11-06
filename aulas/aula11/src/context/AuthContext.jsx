@@ -1,33 +1,45 @@
 import { createContext, useState } from "react";
+import { autenticar } from "../services/AuthServices";
 
 const AuthContext = createContext();
 
-function authProvaider() {
+function AuthProvider(props) {
   const [usuario, setUsuario] = useState({
     email: "",
     perfil: "",
     logado: false,
   });
 
-  const login = (dados) => {
-    if (dados === "pedro@iesb.com" && dados.seha === "1234") {
-        setUsuario({email: dados.email, perfil: "aluno", logado: true});
-    }
-  }
+  const [msg, setMsg] = useState("");
 
+  const login = async (dados) => {
+    const resposta = await autenticar(dados);
+    if (resposta.sucesso) {
+      setUsuario({ email: dados.email, perfil: "aluno", logado: true });
+    } else {
+      setMsg(resposta.msg);
+    }
+  };
   const logout = () => {
-    setUsuario({email: "", perfil: "", logado: false});
+    setUsuario({ email: "", perfil: "", logado: false });
+  };
+
+  const registrar = (dados) => {
+    setUsuario({ email: dados.email, perfil: "aluno", logado: true });
   };
 
   const contexto = {
     usuario,
     login,
-    logout
-  }
+    logout,
+    registrar,
+  };
 
   return (
-    <AuthContext.Provider value={context}>
-        {props.children}
+    <AuthContext.Provider value={contexto}>
+      {props.children}
     </AuthContext.Provider>
-  )
+  );
 }
+
+export { AuthContext, AuthProvider };
