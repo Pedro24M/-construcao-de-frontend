@@ -1,21 +1,28 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Formulario from "./Formulario";
 
 function Registrar() {
+  const [msg, setMsg] = useState("")
   const navigate = useNavigate();
-  const { Registrar } = useContext(AuthContext);
+  const { registrar } = useContext(AuthContext);
+
+  const onEnviar = async (data) => {
+    setMsg("");
+    const erro = await registrar(data)
+    if (erro) {
+      setMsg(erro);
+    } else {
+      navigate("/")
+    }
+  }
   return (
     <>
       <h1>Registrar</h1>
-      <button
-        onClick={() => {
-          Registrar({ email: "pedro@iesb.br", senha: "123456" });
-          navigate("/")
-        }}
-      >
-        Enviar
-      </button>
+      {msg && <p>{msg}</p>}
+      <Formulario onEnviar={onEnviar} />
+      <Link to="/" >Voltar</Link>
     </>
   );
 }

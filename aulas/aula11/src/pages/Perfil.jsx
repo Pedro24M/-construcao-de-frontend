@@ -1,9 +1,30 @@
+import { useContext, useState } from "react";
+import { useParams } from "react-router-dom";
+import Menu from "../components/Menu";
+import Formulario from "./Formulario";
+import { AuthContext } from "../context/AuthContext";
+
 function Perfil() {
-    return(
-        <>
-        <h1>Pagina de Perfil</h1>
-        </>
-    )
+  const [msg, setMsg] = useState("");
+
+  const {usuario, atualizar} = useContext(AuthContext)
+
+  const { id } = useParams();
+
+  const onEnviar = async (data) => {
+    const erro = await atualizar({ id, ...data });
+    if (erro) {
+      setMsg(erro);
+    }
+  };
+
+  return (
+    <>
+      <Menu />
+      <h1>Pagina de Perfil</h1>
+      <Formulario onEnviar={onEnviar} valores={{email: usuario.email, senha: null}}/>
+    </>
+  );
 }
 
-export default Perfil
+export default Perfil;
